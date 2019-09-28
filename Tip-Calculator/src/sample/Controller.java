@@ -19,6 +19,9 @@ public class Controller {
     private TextField tfPrice;
 
     @FXML
+    private TextField people;
+
+    @FXML
     private Slider sliderPercent;
 
     @FXML
@@ -26,6 +29,9 @@ public class Controller {
 
     @FXML
     private Label labelTotal;
+
+    @FXML
+    private Label perPerson;
 
     @FXML
     private Label labelPercentage;
@@ -36,13 +42,13 @@ public class Controller {
     @FXML
     private void handleOnCalculate (final ActionEvent event) {
         calculate();
-        calculateTip();
     }
 
     @FXML
     void initialize() {
         labelTip.setText(currency + "0");
         labelTotal.setText(currency + "0");
+        perPerson.setText(currency + "0");
         onlyNumber(tfPrice);
 
         sliderPercent.setMax(31);
@@ -62,7 +68,7 @@ public class Controller {
         });
     }
 
-    private void calculateTip() {
+    private void calculate() {
         if (!tfPrice.getText().isBlank()) {
             currentPrice = Integer.valueOf(tfPrice.getText());
             currentTip = ((int) (currentPrice / 100.0 * tipPercentage));
@@ -70,11 +76,7 @@ public class Controller {
 
             int total = currentPrice + currentTip;
             labelTotal.setText(currency + total);
+            perPerson.setText(currency + total/Integer.valueOf(people.getText()));
         }
-    }
-
-    private void calculate() {
-        int total = currentPrice + currentTip;
-        labelTotal.setText(currency + total);
     }
 }
